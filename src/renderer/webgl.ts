@@ -1,4 +1,5 @@
-import type { AtlasCell } from "../noise/presets";
+import { getNoiseDefinition } from "../noise/registry";
+import type { AtlasCell } from "../noise/types";
 import { fragmentShaderSource, vertexShaderSource } from "./shaders";
 
 type UniformLocations = {
@@ -88,12 +89,13 @@ export class WebGlNoiseRenderer {
 
   private setCellUniforms(cell: AtlasCell): void {
     const gl = this.gl;
-    gl.uniform1i(this.uniforms.noiseKind, cell.kind === "fbm" ? 1 : 0);
-    gl.uniform1f(this.uniforms.scale, cell.scale);
-    gl.uniform1f(this.uniforms.seed, cell.seed);
-    gl.uniform1i(this.uniforms.octaves, cell.octaves);
-    gl.uniform1f(this.uniforms.gain, cell.gain);
-    gl.uniform1f(this.uniforms.lacunarity, cell.lacunarity);
+    const definition = getNoiseDefinition(cell.noiseId);
+    gl.uniform1i(this.uniforms.noiseKind, definition.shaderKind);
+    gl.uniform1f(this.uniforms.scale, cell.params.scale ?? 1);
+    gl.uniform1f(this.uniforms.seed, cell.params.seed ?? 0);
+    gl.uniform1i(this.uniforms.octaves, Math.round(cell.params.octaves ?? 1));
+    gl.uniform1f(this.uniforms.gain, cell.params.gain ?? 0.5);
+    gl.uniform1f(this.uniforms.lacunarity, cell.params.lacunarity ?? 2);
   }
 }
 
@@ -150,4 +152,3 @@ function getUniform(gl: WebGL2RenderingContext, program: WebGLProgram, name: str
 
   return location;
 }
-
