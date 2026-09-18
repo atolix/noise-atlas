@@ -2,6 +2,7 @@ export type NoiseParameter =
   | {
       type: "float";
       name: string;
+      shaderUniform: string;
       label: string;
       min: number;
       max: number;
@@ -11,6 +12,7 @@ export type NoiseParameter =
   | {
       type: "int";
       name: string;
+      shaderUniform: string;
       label: string;
       min: number;
       max: number;
@@ -34,4 +36,3 @@ export type AtlasCell = {
   label: string;
   params: NoiseParameterValues;
 };
-

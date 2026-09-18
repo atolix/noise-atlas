@@ -1,14 +1,10 @@
-import { getNoiseDefinition } from "../noise/registry";
+import { getNoiseDefinition, noiseDefinitions } from "../noise/registry";
 import type { AtlasCell } from "../noise/types";
 import { fragmentShaderSource, vertexShaderSource } from "./shaders";
 
 type UniformLocations = {
   noiseKind: WebGLUniformLocation;
-  scale: WebGLUniformLocation;
-  seed: WebGLUniformLocation;
-  octaves: WebGLUniformLocation;
-  gain: WebGLUniformLocation;
-  lacunarity: WebGLUniformLocation;
+  parameters: Map<string, WebGLUniformLocation>;
 };
 
 export class WebGlNoiseRenderer {
@@ -33,11 +29,7 @@ export class WebGlNoiseRenderer {
     this.program = createProgram(gl, vertexShaderSource, fragmentShaderSource);
     this.uniforms = {
       noiseKind: getUniform(gl, this.program, "uNoiseKind"),
-      scale: getUniform(gl, this.program, "uScale"),
-      seed: getUniform(gl, this.program, "uSeed"),
-      octaves: getUniform(gl, this.program, "uOctaves"),
-      gain: getUniform(gl, this.program, "uGain"),
-      lacunarity: getUniform(gl, this.program, "uLacunarity")
+      parameters: getParameterUniforms(gl, this.program)
     };
 
     const vao = gl.createVertexArray();
@@ -91,12 +83,40 @@ export class WebGlNoiseRenderer {
     const gl = this.gl;
     const definition = getNoiseDefinition(cell.noiseId);
     gl.uniform1i(this.uniforms.noiseKind, definition.shaderKind);
-    gl.uniform1f(this.uniforms.scale, cell.params.scale ?? 1);
-    gl.uniform1f(this.uniforms.seed, cell.params.seed ?? 0);
-    gl.uniform1i(this.uniforms.octaves, Math.round(cell.params.octaves ?? 1));
-    gl.uniform1f(this.uniforms.gain, cell.params.gain ?? 0.5);
-    gl.uniform1f(this.uniforms.lacunarity, cell.params.lacunarity ?? 2);
+
+    for (const parameter of definition.parameters) {
+      const location = this.uniforms.parameters.get(parameter.shaderUniform);
+
+      if (!location) {
+        throw new Error(`Missing cached WebGL uniform: ${parameter.shaderUniform}`);
+      }
+
+      const value = cell.params[parameter.name] ?? parameter.defaultValue;
+
+      if (parameter.type === "int") {
+        gl.uniform1i(location, Math.round(value));
+      } else {
+        gl.uniform1f(location, value);
+      }
+    }
   }
+}
+
+function getParameterUniforms(
+  gl: WebGL2RenderingContext,
+  program: WebGLProgram
+): Map<string, WebGLUniformLocation> {
+  const uniforms = new Map<string, WebGLUniformLocation>();
+
+  for (const definition of noiseDefinitions) {
+    for (const parameter of definition.parameters) {
+      if (!uniforms.has(parameter.shaderUniform)) {
+        uniforms.set(parameter.shaderUniform, getUniform(gl, program, parameter.shaderUniform));
+      }
+    }
+  }
+
+  return uniforms;
 }
 
 function createProgram(gl: WebGL2RenderingContext, vertexSource: string, fragmentSource: string): WebGLProgram {

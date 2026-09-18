@@ -4,6 +4,7 @@ const commonParameters = [
   {
     type: "float",
     name: "scale",
+    shaderUniform: "uScale",
     label: "Scale",
     min: 1,
     max: 24,
@@ -13,6 +14,7 @@ const commonParameters = [
   {
     type: "int",
     name: "seed",
+    shaderUniform: "uSeed",
     label: "Seed",
     min: 0,
     max: 99,
@@ -39,6 +41,7 @@ export const noiseDefinitions: NoiseDefinition[] = [
       {
         type: "int",
         name: "octaves",
+        shaderUniform: "uOctaves",
         label: "Octaves",
         min: 1,
         max: 8,
@@ -48,6 +51,7 @@ export const noiseDefinitions: NoiseDefinition[] = [
       {
         type: "float",
         name: "gain",
+        shaderUniform: "uGain",
         label: "Gain",
         min: 0.1,
         max: 0.9,
@@ -57,6 +61,7 @@ export const noiseDefinitions: NoiseDefinition[] = [
       {
         type: "float",
         name: "lacunarity",
+        shaderUniform: "uLacunarity",
         label: "Lacunarity",
         min: 1.2,
         max: 3.5,
@@ -82,4 +87,3 @@ export function getDefaultParameterValues(definition: NoiseDefinition): NoisePar
     definition.parameters.map((parameter) => [parameter.name, parameter.defaultValue])
   );
 }
-
