@@ -28,10 +28,6 @@ root.innerHTML = `
         <p data-noise-description></p>
       </div>
       <form class="parameter-form" aria-label="Noise parameters"></form>
-      <div class="control-group compact">
-        <h2>Milestone 2</h2>
-        <p>Registry-backed controls update the selected preview immediately.</p>
-      </div>
     </aside>
 
     <section class="atlas-panel" aria-label="Atlas grid">
