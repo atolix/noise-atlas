@@ -16,6 +16,9 @@ let selectedIndex = 0;
 let activeNoiseId = atlasCells[0]?.noiseId ?? noiseDefinitions[0]?.id ?? "value";
 let atlasRenderer: WebGlNoiseRenderer | null = null;
 let previewRenderer: WebGlNoiseRenderer | null = null;
+let renderFrame: number | null = null;
+
+const maxPixelRatio = 2;
 
 root.innerHTML = `
   <main class="app-shell">
@@ -65,6 +68,7 @@ root.innerHTML = `
 `;
 
 const atlasCanvas = query<HTMLCanvasElement>(".atlas-canvas");
+const atlasStage = query<HTMLDivElement>(".atlas-stage");
 const previewCanvas = query<HTMLCanvasElement>(".preview-canvas");
 const grid = query<HTMLDivElement>(".atlas-grid");
 const selectedName = query<HTMLHeadingElement>("[data-selected-name]");
@@ -81,6 +85,10 @@ try {
   renderGridButtons();
   renderSelection();
   queueRender();
+
+  const resizeObserver = new ResizeObserver(queueRender);
+  resizeObserver.observe(atlasStage);
+  resizeObserver.observe(previewCanvas);
 } catch (error) {
   showFatalError(error);
 }
@@ -237,7 +245,14 @@ function renderMetadata(cell: AtlasCell, parameters: NoiseParameter[]): string {
 }
 
 function queueRender(): void {
-  requestAnimationFrame(renderCanvases);
+  if (renderFrame !== null) {
+    return;
+  }
+
+  renderFrame = requestAnimationFrame(() => {
+    renderFrame = null;
+    renderCanvases();
+  });
 }
 
 function renderCanvases(): void {
@@ -245,12 +260,8 @@ function renderCanvases(): void {
     return;
   }
 
-  const pixelRatio = window.devicePixelRatio;
-  const stageRect = atlasCanvas.parentElement?.getBoundingClientRect();
-
-  if (!stageRect) {
-    return;
-  }
+  const pixelRatio = Math.min(window.devicePixelRatio, maxPixelRatio);
+  const stageRect = atlasStage.getBoundingClientRect();
 
   atlasRenderer.resize(stageRect.width, stageRect.height, pixelRatio);
 
