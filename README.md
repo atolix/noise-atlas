@@ -30,13 +30,14 @@ Open the local URL printed by Vite and click an atlas cell to choose a preset. W
 
 - `src/noise/registry.ts` defines noise sources and their editable shader parameters.
 - `src/noise/presets.ts` contains the cells displayed in the atlas.
-- `src/renderer/noise.frag` implements the noise functions and color ramp.
+- `src/renderer/shaders/fragment/` contains the composable fragment shader sections.
+- `src/renderer/shaders.ts` assembles the shader sections in dependency order.
 - `src/renderer/webgl.ts` manages WebGL2 resources and renders atlas cells.
 - `src/main.ts` builds the interface and coordinates selection and rendering.
 
 ## Adding a noise source
 
-1. Add the GLSL implementation and select it through `uNoiseKind` in `noise.frag`.
+1. Add the GLSL implementation to the appropriate fragment shader section and select it through `uNoiseKind` in `main.glsl`.
 2. Add its definition and parameter-to-uniform mappings in `registry.ts`.
 3. Add one or more representative cells in `presets.ts`.
 

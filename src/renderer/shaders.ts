@@ -1,4 +1,10 @@
-import fragmentShaderSource from "./noise.frag?raw";
+import baseNoiseSource from "./shaders/fragment/base-noise.glsl?raw";
+import cellularSource from "./shaders/fragment/cellular.glsl?raw";
+import fractalSource from "./shaders/fragment/fractal.glsl?raw";
+import fragmentMainSource from "./shaders/fragment/main.glsl?raw";
+import paletteSource from "./shaders/fragment/palette.glsl?raw";
+import patternsSource from "./shaders/fragment/patterns.glsl?raw";
+import preambleSource from "./shaders/fragment/preamble.glsl?raw";
 
 export const vertexShaderSource = `#version 300 es
 precision highp float;
@@ -18,4 +24,12 @@ void main() {
 }
 `;
 
-export { fragmentShaderSource };
+export const fragmentShaderSource = [
+  preambleSource,
+  baseNoiseSource,
+  cellularSource,
+  fractalSource,
+  patternsSource,
+  paletteSource,
+  fragmentMainSource
+].join("\n");
