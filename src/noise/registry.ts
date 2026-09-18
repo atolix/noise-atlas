@@ -145,6 +145,13 @@ export const noiseDefinitions: NoiseDefinition[] = [
     description: "Smooth triangular-grid noise with low directional bias.",
     shaderKind: 7,
     parameters: [...commonParameters]
+  },
+  {
+    id: "billow",
+    name: "Billow noise",
+    description: "Folded fractal noise for rounded clouds and rolling formations.",
+    shaderKind: 8,
+    parameters: [...commonParameters, ...fractalParameters]
   }
 ];
 

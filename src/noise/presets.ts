@@ -252,6 +252,42 @@ export const atlasCells: AtlasCell[] = [
       scale: 14,
       seed: 67
     }
+  },
+  {
+    id: "billow-soft",
+    noiseId: "billow",
+    label: "Billow / soft",
+    params: {
+      scale: 3,
+      seed: 13,
+      octaves: 4,
+      gain: 0.46,
+      lacunarity: 2
+    }
+  },
+  {
+    id: "billow-clouds",
+    noiseId: "billow",
+    label: "Billow / clouds",
+    params: {
+      scale: 5,
+      seed: 38,
+      octaves: 6,
+      gain: 0.5,
+      lacunarity: 2.1
+    }
+  },
+  {
+    id: "billow-dense",
+    noiseId: "billow",
+    label: "Billow / dense",
+    params: {
+      scale: 9,
+      seed: 72,
+      octaves: 7,
+      gain: 0.55,
+      lacunarity: 2.25
+    }
   }
 ];
 

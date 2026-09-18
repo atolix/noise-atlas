@@ -153,6 +153,26 @@ float ridgedFbm(vec2 p) {
   return sum / max(normalization, 0.0001);
 }
 
+float billowFbm(vec2 p) {
+  float sum = 0.0;
+  float amplitude = 0.5;
+  float normalization = 0.0;
+
+  for (int i = 0; i < 8; i++) {
+    if (i >= uOctaves) {
+      break;
+    }
+
+    float billow = abs(valueNoise(p) * 2.0 - 1.0);
+    sum += amplitude * billow;
+    normalization += amplitude;
+    p *= uLacunarity;
+    amplitude *= uGain;
+  }
+
+  return sum / max(normalization, 0.0001);
+}
+
 float domainWarp(vec2 p) {
   vec2 offset = vec2(
     fbm(p + vec2(0.0, 0.0)),
@@ -195,6 +215,8 @@ void main() {
     n = voronoiEdges(p);
   } else if (uNoiseKind == 7) {
     n = simplexNoise(p);
+  } else if (uNoiseKind == 8) {
+    n = billowFbm(p);
   } else {
     n = valueNoise(p);
   }
