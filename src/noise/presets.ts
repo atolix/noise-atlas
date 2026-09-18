@@ -360,6 +360,36 @@ export const atlasCells: AtlasCell[] = [
       frequency: 3.2,
       bandwidth: 6
     }
+  },
+  {
+    id: "cellular-blocks",
+    noiseId: "cellular-id",
+    label: "Cellular / blocks",
+    params: {
+      scale: 5,
+      seed: 22,
+      jitter: 0.15
+    }
+  },
+  {
+    id: "cellular-mosaic",
+    noiseId: "cellular-id",
+    label: "Cellular / mosaic",
+    params: {
+      scale: 8,
+      seed: 49,
+      jitter: 0.65
+    }
+  },
+  {
+    id: "cellular-fragments",
+    noiseId: "cellular-id",
+    label: "Cellular / fragments",
+    params: {
+      scale: 13,
+      seed: 87,
+      jitter: 1
+    }
   }
 ];
 

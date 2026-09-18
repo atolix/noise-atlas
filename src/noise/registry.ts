@@ -201,6 +201,13 @@ export const noiseDefinitions: NoiseDefinition[] = [
         defaultValue: 3
       }
     ]
+  },
+  {
+    id: "cellular-id",
+    name: "Cellular ID",
+    description: "A stable random value for each nearest Voronoi region.",
+    shaderKind: 11,
+    parameters: [...commonParameters, ...cellularParameters]
   }
 ];
 
