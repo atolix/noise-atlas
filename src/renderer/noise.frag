@@ -9,6 +9,9 @@ uniform float uGain;
 uniform float uLacunarity;
 uniform float uJitter;
 uniform float uWarpStrength;
+uniform float uAngle;
+uniform float uFrequency;
+uniform float uBandwidth;
 
 in vec2 vUv;
 out vec4 outColor;
@@ -193,6 +196,35 @@ float turbulence(vec2 p) {
   return clamp(sum / max(normalization, 0.0001) * 1.8, 0.0, 1.0);
 }
 
+float gaborNoise(vec2 p) {
+  vec2 cell = floor(p);
+  vec2 local = fract(p);
+  float angle = radians(uAngle);
+  vec2 direction = vec2(cos(angle), sin(angle));
+  float sum = 0.0;
+  float normalization = 0.0;
+
+  for (int y = -1; y <= 1; y++) {
+    for (int x = -1; x <= 1; x++) {
+      vec2 neighbor = vec2(float(x), float(y));
+      vec2 neighborCell = cell + neighbor;
+      vec2 impulse = vec2(
+        hash(neighborCell),
+        hash(neighborCell + vec2(31.7, 17.3))
+      );
+      vec2 delta = neighbor + impulse - local;
+      float envelope = exp(-uBandwidth * dot(delta, delta));
+      float phase = hash(neighborCell + vec2(67.1, 11.9)) * 6.28318530718;
+      float wave = cos(6.28318530718 * uFrequency * dot(delta, direction) + phase);
+      sum += envelope * wave;
+      normalization += envelope;
+    }
+  }
+
+  float value = sum / max(normalization, 0.35);
+  return clamp(value * 0.5 + 0.5, 0.0, 1.0);
+}
+
 float domainWarp(vec2 p) {
   vec2 offset = vec2(
     fbm(p + vec2(0.0, 0.0)),
@@ -239,6 +271,8 @@ void main() {
     n = billowFbm(p);
   } else if (uNoiseKind == 9) {
     n = turbulence(p);
+  } else if (uNoiseKind == 10) {
+    n = gaborNoise(p);
   } else {
     n = valueNoise(p);
   }

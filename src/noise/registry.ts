@@ -159,6 +159,48 @@ export const noiseDefinitions: NoiseDefinition[] = [
     description: "Folded gradient octaves for flames, marble, and energetic flow.",
     shaderKind: 9,
     parameters: [...commonParameters, ...fractalParameters]
+  },
+  {
+    id: "gabor",
+    name: "Gabor noise",
+    description: "Directional band-limited noise for fibers, grain, and wind-shaped surfaces.",
+    shaderKind: 10,
+    parameters: [
+      ...commonParameters,
+      {
+        type: "float",
+        name: "angle",
+        shaderUniform: "uAngle",
+        uniformType: "float",
+        label: "Angle",
+        min: 0,
+        max: 180,
+        step: 1,
+        defaultValue: 30
+      },
+      {
+        type: "float",
+        name: "frequency",
+        shaderUniform: "uFrequency",
+        uniformType: "float",
+        label: "Frequency",
+        min: 0.5,
+        max: 4,
+        step: 0.05,
+        defaultValue: 1.5
+      },
+      {
+        type: "float",
+        name: "bandwidth",
+        shaderUniform: "uBandwidth",
+        uniformType: "float",
+        label: "Bandwidth",
+        min: 1,
+        max: 8,
+        step: 0.1,
+        defaultValue: 3
+      }
+    ]
   }
 ];
 

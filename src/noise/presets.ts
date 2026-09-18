@@ -324,6 +324,42 @@ export const atlasCells: AtlasCell[] = [
       gain: 0.56,
       lacunarity: 2.3
     }
+  },
+  {
+    id: "gabor-fibers",
+    noiseId: "gabor",
+    label: "Gabor / fibers",
+    params: {
+      scale: 6,
+      seed: 19,
+      angle: 18,
+      frequency: 1.4,
+      bandwidth: 2.5
+    }
+  },
+  {
+    id: "gabor-grain",
+    noiseId: "gabor",
+    label: "Gabor / grain",
+    params: {
+      scale: 9,
+      seed: 46,
+      angle: 52,
+      frequency: 2.2,
+      bandwidth: 4
+    }
+  },
+  {
+    id: "gabor-ripples",
+    noiseId: "gabor",
+    label: "Gabor / ripples",
+    params: {
+      scale: 12,
+      seed: 83,
+      angle: 118,
+      frequency: 3.2,
+      bandwidth: 6
+    }
   }
 ];
 
