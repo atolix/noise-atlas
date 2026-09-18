@@ -152,6 +152,13 @@ export const noiseDefinitions: NoiseDefinition[] = [
     description: "Folded fractal noise for rounded clouds and rolling formations.",
     shaderKind: 8,
     parameters: [...commonParameters, ...fractalParameters]
+  },
+  {
+    id: "turbulence",
+    name: "Turbulence noise",
+    description: "Folded gradient octaves for flames, marble, and energetic flow.",
+    shaderKind: 9,
+    parameters: [...commonParameters, ...fractalParameters]
   }
 ];
 

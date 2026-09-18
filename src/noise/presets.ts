@@ -288,6 +288,42 @@ export const atlasCells: AtlasCell[] = [
       gain: 0.55,
       lacunarity: 2.25
     }
+  },
+  {
+    id: "turbulence-flame",
+    noiseId: "turbulence",
+    label: "Turbulence / flame",
+    params: {
+      scale: 3,
+      seed: 17,
+      octaves: 4,
+      gain: 0.52,
+      lacunarity: 2
+    }
+  },
+  {
+    id: "turbulence-marble",
+    noiseId: "turbulence",
+    label: "Turbulence / marble",
+    params: {
+      scale: 6,
+      seed: 41,
+      octaves: 6,
+      gain: 0.5,
+      lacunarity: 2.15
+    }
+  },
+  {
+    id: "turbulence-storm",
+    noiseId: "turbulence",
+    label: "Turbulence / storm",
+    params: {
+      scale: 10,
+      seed: 79,
+      octaves: 7,
+      gain: 0.56,
+      lacunarity: 2.3
+    }
   }
 ];
 

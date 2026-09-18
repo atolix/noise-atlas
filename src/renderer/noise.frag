@@ -173,6 +173,26 @@ float billowFbm(vec2 p) {
   return sum / max(normalization, 0.0001);
 }
 
+float turbulence(vec2 p) {
+  float sum = 0.0;
+  float amplitude = 0.5;
+  float normalization = 0.0;
+
+  for (int i = 0; i < 8; i++) {
+    if (i >= uOctaves) {
+      break;
+    }
+
+    float flow = abs(gradientNoise(p) * 2.0 - 1.0);
+    sum += amplitude * flow;
+    normalization += amplitude;
+    p *= uLacunarity;
+    amplitude *= uGain;
+  }
+
+  return clamp(sum / max(normalization, 0.0001) * 1.8, 0.0, 1.0);
+}
+
 float domainWarp(vec2 p) {
   vec2 offset = vec2(
     fbm(p + vec2(0.0, 0.0)),
@@ -217,6 +237,8 @@ void main() {
     n = simplexNoise(p);
   } else if (uNoiseKind == 8) {
     n = billowFbm(p);
+  } else if (uNoiseKind == 9) {
+    n = turbulence(p);
   } else {
     n = valueNoise(p);
   }
