@@ -12,6 +12,8 @@ uniform float uWarpStrength;
 uniform float uAngle;
 uniform float uFrequency;
 uniform float uBandwidth;
+uniform float uRingFrequency;
+uniform float uDistortion;
 
 in vec2 vUv;
 out vec4 outColor;
@@ -274,6 +276,13 @@ float gaborNoise(vec2 p) {
   return clamp(value * 0.5 + 0.5, 0.0, 1.0);
 }
 
+float woodRings(vec2 p) {
+  vec2 center = vec2(uScale * 0.5);
+  float grain = valueNoise(p * 0.75);
+  float radius = length(p - center) + (grain - 0.5) * uDistortion;
+  return cos(radius * uRingFrequency * 6.28318530718) * 0.5 + 0.5;
+}
+
 float domainWarp(vec2 p) {
   vec2 offset = vec2(
     fbm(p + vec2(0.0, 0.0)),
@@ -326,6 +335,8 @@ void main() {
     n = cellularId(p);
   } else if (uNoiseKind == 12) {
     n = hybridMultifractal(p);
+  } else if (uNoiseKind == 13) {
+    n = woodRings(p);
   } else {
     n = valueNoise(p);
   }

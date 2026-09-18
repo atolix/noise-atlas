@@ -215,6 +215,37 @@ export const noiseDefinitions: NoiseDefinition[] = [
     description: "Fractal detail weighted by larger forms for terrain-like massifs.",
     shaderKind: 12,
     parameters: [...commonParameters, ...fractalParameters]
+  },
+  {
+    id: "wood-rings",
+    name: "Wood rings",
+    description: "Concentric bands distorted by noise for wood grain and layered strata.",
+    shaderKind: 13,
+    parameters: [
+      ...commonParameters,
+      {
+        type: "float",
+        name: "ringFrequency",
+        shaderUniform: "uRingFrequency",
+        uniformType: "float",
+        label: "Ring frequency",
+        min: 0.5,
+        max: 4,
+        step: 0.05,
+        defaultValue: 1.5
+      },
+      {
+        type: "float",
+        name: "distortion",
+        shaderUniform: "uDistortion",
+        uniformType: "float",
+        label: "Distortion",
+        min: 0,
+        max: 2.5,
+        step: 0.05,
+        defaultValue: 1
+      }
+    ]
   }
 ];
 

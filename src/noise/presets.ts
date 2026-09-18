@@ -426,6 +426,39 @@ export const atlasCells: AtlasCell[] = [
       gain: 0.58,
       lacunarity: 2.3
     }
+  },
+  {
+    id: "wood-wide",
+    noiseId: "wood-rings",
+    label: "Wood / wide rings",
+    params: {
+      scale: 6,
+      seed: 20,
+      ringFrequency: 1,
+      distortion: 0.55
+    }
+  },
+  {
+    id: "wood-grain",
+    noiseId: "wood-rings",
+    label: "Wood / grain",
+    params: {
+      scale: 8,
+      seed: 55,
+      ringFrequency: 2,
+      distortion: 1.2
+    }
+  },
+  {
+    id: "wood-knots",
+    noiseId: "wood-rings",
+    label: "Wood / knots",
+    params: {
+      scale: 10,
+      seed: 94,
+      ringFrequency: 3.1,
+      distortion: 2
+    }
   }
 ];
 
