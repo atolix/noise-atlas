@@ -5,10 +5,13 @@
   "type": "module",
   "scripts": {
     "dev": "vite --host 127.0.0.1",
+    "lint": "oxlint src",
     "build": "tsc && vite build",
+    "check": "npm run lint && npm run build",
     "preview": "vite preview --host 127.0.0.1"
   },
   "devDependencies": {
+    "oxlint": "^1.83.0",
     "typescript": "^7.0.2",
     "vite": "^8.1.5"
   }
