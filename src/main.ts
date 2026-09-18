@@ -341,6 +341,17 @@ input {
   padding: 24px;
 }
 
+.panel {
+  position: sticky;
+  top: 0;
+  align-self: start;
+  height: 100vh;
+  height: 100dvh;
+  overflow-y: auto;
+  overscroll-behavior: contain;
+  scrollbar-gutter: stable;
+}
+
 .left-panel {
   border-right: 1px solid rgba(255, 255, 255, 0.09);
   background: #171a20;
@@ -588,7 +599,12 @@ dd {
   }
 
   .right-panel {
+    position: static;
     grid-column: 1 / -1;
+    height: auto;
+    overflow-y: visible;
+    overscroll-behavior: auto;
+    scrollbar-gutter: auto;
     border-top: 1px solid rgba(255, 255, 255, 0.09);
     border-left: 0;
   }
@@ -605,6 +621,11 @@ dd {
 
   .left-panel,
   .right-panel {
+    position: static;
+    height: auto;
+    overflow-y: visible;
+    overscroll-behavior: auto;
+    scrollbar-gutter: auto;
     border: 0;
   }
 
