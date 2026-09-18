@@ -225,6 +225,33 @@ export const atlasCells: AtlasCell[] = [
       seed: 58,
       jitter: 1
     }
+  },
+  {
+    id: "simplex-broad",
+    noiseId: "simplex",
+    label: "Simplex / broad",
+    params: {
+      scale: 3,
+      seed: 11
+    }
+  },
+  {
+    id: "simplex-natural",
+    noiseId: "simplex",
+    label: "Simplex / natural",
+    params: {
+      scale: 7,
+      seed: 35
+    }
+  },
+  {
+    id: "simplex-fine",
+    noiseId: "simplex",
+    label: "Simplex / fine",
+    params: {
+      scale: 14,
+      seed: 67
+    }
   }
 ];
 

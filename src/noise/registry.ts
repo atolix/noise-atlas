@@ -138,6 +138,13 @@ export const noiseDefinitions: NoiseDefinition[] = [
     description: "Cell boundaries derived from the two nearest Worley feature points.",
     shaderKind: 6,
     parameters: [...commonParameters, ...cellularParameters]
+  },
+  {
+    id: "simplex",
+    name: "Simplex noise",
+    description: "Smooth triangular-grid noise with low directional bias.",
+    shaderKind: 7,
+    parameters: [...commonParameters]
   }
 ];
 

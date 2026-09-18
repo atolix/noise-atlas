@@ -51,6 +51,32 @@ float gradientNoise(vec2 p) {
   return clamp(0.5 + value * 0.70710678, 0.0, 1.0);
 }
 
+float simplexNoise(vec2 p) {
+  const float skew = 0.36602540378;
+  const float unskew = 0.21132486541;
+  vec2 cell = floor(p + (p.x + p.y) * skew);
+  vec2 local0 = p - cell + (cell.x + cell.y) * unskew;
+  vec2 corner = local0.x > local0.y ? vec2(1.0, 0.0) : vec2(0.0, 1.0);
+  vec2 local1 = local0 - corner + unskew;
+  vec2 local2 = local0 - 1.0 + 2.0 * unskew;
+
+  vec3 weights = max(
+    0.5 - vec3(dot(local0, local0), dot(local1, local1), dot(local2, local2)),
+    0.0
+  );
+  weights *= weights;
+  weights *= weights;
+
+  vec3 contributions = vec3(
+    dot(randomGradient(cell), local0),
+    dot(randomGradient(cell + corner), local1),
+    dot(randomGradient(cell + 1.0), local2)
+  );
+  float value = 70.0 * dot(weights, contributions);
+
+  return clamp(value * 0.5 + 0.5, 0.0, 1.0);
+}
+
 vec2 worleyDistances(vec2 p) {
   vec2 cell = floor(p);
   vec2 local = fract(p);
@@ -167,6 +193,8 @@ void main() {
     n = domainWarp(p);
   } else if (uNoiseKind == 6) {
     n = voronoiEdges(p);
+  } else if (uNoiseKind == 7) {
+    n = simplexNoise(p);
   } else {
     n = valueNoise(p);
   }
