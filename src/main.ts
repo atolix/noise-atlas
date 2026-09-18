@@ -22,7 +22,6 @@ const maxPixelRatio = 2;
 root.innerHTML = `
   <main class="app-shell">
     <aside class="panel left-panel" aria-label="Noise controls">
-      <p class="eyebrow">Noise Atlas</p>
       <div class="control-group compact">
         <h2 data-noise-name></h2>
         <p data-noise-description></p>
@@ -407,6 +406,12 @@ dd {
   margin-top: 32px;
   padding-top: 24px;
   border-top: 1px solid rgba(255, 255, 255, 0.09);
+}
+
+.left-panel > .control-group:first-child {
+  margin-top: 0;
+  padding-top: 0;
+  border-top: 0;
 }
 
 .control-group p,
