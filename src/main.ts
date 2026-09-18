@@ -86,7 +86,13 @@ try {
 }
 
 window.addEventListener("resize", queueRender);
-window.addEventListener("keydown", (event) => {
+grid.addEventListener("keydown", (event) => {
+  const target = event.target;
+
+  if (!(target instanceof HTMLButtonElement) || !target.classList.contains("atlas-cell")) {
+    return;
+  }
+
   if (event.key === "ArrowRight") {
     moveSelection(1);
     event.preventDefault();
