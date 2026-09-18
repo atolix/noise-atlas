@@ -30,6 +30,25 @@ float valueNoise(vec2 p) {
   return mix(mix(a, b, u.x), mix(c, d, u.x), u.y);
 }
 
+vec2 randomGradient(vec2 p) {
+  float angle = hash(p) * 6.28318530718;
+  return vec2(cos(angle), sin(angle));
+}
+
+float gradientNoise(vec2 p) {
+  vec2 i = floor(p);
+  vec2 f = fract(p);
+  vec2 u = f * f * f * (f * (f * 6.0 - 15.0) + 10.0);
+
+  float a = dot(randomGradient(i), f);
+  float b = dot(randomGradient(i + vec2(1.0, 0.0)), f - vec2(1.0, 0.0));
+  float c = dot(randomGradient(i + vec2(0.0, 1.0)), f - vec2(0.0, 1.0));
+  float d = dot(randomGradient(i + vec2(1.0, 1.0)), f - vec2(1.0, 1.0));
+  float value = mix(mix(a, b, u.x), mix(c, d, u.x), u.y);
+
+  return clamp(0.5 + value * 0.70710678, 0.0, 1.0);
+}
+
 float fbm(vec2 p) {
   float sum = 0.0;
   float amplitude = 0.5;
@@ -66,10 +85,17 @@ void main() {
   vec2 uv = vUv;
   vec2 p = uv * uScale;
 
-  float n = uNoiseKind == 1 ? fbm(p) : valueNoise(p);
+  float n;
+
+  if (uNoiseKind == 1) {
+    n = fbm(p);
+  } else if (uNoiseKind == 2) {
+    n = gradientNoise(p);
+  } else {
+    n = valueNoise(p);
+  }
   n = smoothstep(0.05, 0.95, n);
 
   vec3 color = ramp(n);
   outColor = vec4(color, 1.0);
 }
-

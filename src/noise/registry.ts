@@ -69,6 +69,13 @@ export const noiseDefinitions: NoiseDefinition[] = [
         defaultValue: 2
       }
     ]
+  },
+  {
+    id: "gradient",
+    name: "Gradient noise",
+    description: "Smooth gradient noise for natural-looking terrain and flowing textures.",
+    shaderKind: 2,
+    parameters: [...commonParameters]
   }
 ];
 

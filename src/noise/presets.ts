@@ -63,6 +63,33 @@ export const atlasCells: AtlasCell[] = [
       gain: 0.42,
       lacunarity: 2.35
     }
+  },
+  {
+    id: "gradient-broad",
+    noiseId: "gradient",
+    label: "Gradient / broad",
+    params: {
+      scale: 3,
+      seed: 8
+    }
+  },
+  {
+    id: "gradient-flow",
+    noiseId: "gradient",
+    label: "Gradient / flow",
+    params: {
+      scale: 7,
+      seed: 24
+    }
+  },
+  {
+    id: "gradient-fine",
+    noiseId: "gradient",
+    label: "Gradient / fine",
+    params: {
+      scale: 14,
+      seed: 47
+    }
   }
 ];
 
