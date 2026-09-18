@@ -35,7 +35,6 @@ root.innerHTML = `
           <p class="eyebrow">Atlas Grid</p>
           <h2>Browse presets</h2>
         </div>
-        <p class="hint">Arrow keys move selection.</p>
       </div>
       <div class="atlas-stage">
         <canvas class="atlas-canvas" aria-hidden="true"></canvas>
@@ -425,8 +424,7 @@ dd {
   border-top: 0;
 }
 
-.control-group p,
-.hint {
+.control-group p {
   margin-bottom: 0;
   font-size: 0.9rem;
   line-height: 1.55;
