@@ -518,23 +518,19 @@ dd {
 
 .atlas-stage {
   position: relative;
-  min-height: 0;
-  flex: 1;
+  flex: 1 0 auto;
 }
 
-.atlas-canvas,
-.atlas-grid {
+.atlas-canvas {
   position: absolute;
   inset: 0;
   width: 100%;
   height: 100%;
-}
-
-.atlas-canvas {
   border-radius: 8px;
 }
 
 .atlas-grid {
+  position: relative;
   display: grid;
   grid-template-columns: repeat(auto-fill, minmax(180px, 1fr));
   grid-auto-rows: 160px;
@@ -655,10 +651,6 @@ dd {
   .left-panel,
   .right-panel {
     border: 0;
-  }
-
-  .atlas-panel {
-    min-height: 560px;
   }
 
   .atlas-toolbar {
