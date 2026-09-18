@@ -7,6 +7,7 @@ uniform float uSeed;
 uniform int uOctaves;
 uniform float uGain;
 uniform float uLacunarity;
+uniform float uJitter;
 
 in vec2 vUv;
 out vec4 outColor;
@@ -47,6 +48,27 @@ float gradientNoise(vec2 p) {
   float value = mix(mix(a, b, u.x), mix(c, d, u.x), u.y);
 
   return clamp(0.5 + value * 0.70710678, 0.0, 1.0);
+}
+
+float worleyNoise(vec2 p) {
+  vec2 cell = floor(p);
+  vec2 local = fract(p);
+  float minDistance = 2.0;
+
+  for (int y = -1; y <= 1; y++) {
+    for (int x = -1; x <= 1; x++) {
+      vec2 neighbor = vec2(float(x), float(y));
+      vec2 neighborCell = cell + neighbor;
+      vec2 randomPoint = vec2(
+        hash(neighborCell),
+        hash(neighborCell + vec2(19.19, 73.73))
+      );
+      vec2 featurePoint = mix(vec2(0.5), randomPoint, uJitter);
+      minDistance = min(minDistance, length(neighbor + featurePoint - local));
+    }
+  }
+
+  return clamp(minDistance * 1.41421356, 0.0, 1.0);
 }
 
 float fbm(vec2 p) {
@@ -91,6 +113,8 @@ void main() {
     n = fbm(p);
   } else if (uNoiseKind == 2) {
     n = gradientNoise(p);
+  } else if (uNoiseKind == 3) {
+    n = worleyNoise(p);
   } else {
     n = valueNoise(p);
   }

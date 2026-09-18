@@ -76,6 +76,25 @@ export const noiseDefinitions: NoiseDefinition[] = [
     description: "Smooth gradient noise for natural-looking terrain and flowing textures.",
     shaderKind: 2,
     parameters: [...commonParameters]
+  },
+  {
+    id: "worley",
+    name: "Worley noise",
+    description: "Cellular distance noise for stone, scales, and cracked surface patterns.",
+    shaderKind: 3,
+    parameters: [
+      ...commonParameters,
+      {
+        type: "float",
+        name: "jitter",
+        shaderUniform: "uJitter",
+        label: "Jitter",
+        min: 0,
+        max: 1,
+        step: 0.01,
+        defaultValue: 1
+      }
+    ]
   }
 ];
 

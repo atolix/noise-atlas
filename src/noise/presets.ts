@@ -90,6 +90,36 @@ export const atlasCells: AtlasCell[] = [
       scale: 14,
       seed: 47
     }
+  },
+  {
+    id: "worley-ordered",
+    noiseId: "worley",
+    label: "Worley / ordered",
+    params: {
+      scale: 5,
+      seed: 6,
+      jitter: 0.2
+    }
+  },
+  {
+    id: "worley-cells",
+    noiseId: "worley",
+    label: "Worley / cells",
+    params: {
+      scale: 8,
+      seed: 21,
+      jitter: 0.72
+    }
+  },
+  {
+    id: "worley-cracks",
+    noiseId: "worley",
+    label: "Worley / cracks",
+    params: {
+      scale: 13,
+      seed: 44,
+      jitter: 1
+    }
   }
 ];
 
