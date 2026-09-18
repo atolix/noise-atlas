@@ -156,6 +156,45 @@ export const atlasCells: AtlasCell[] = [
       gain: 0.44,
       lacunarity: 2.3
     }
+  },
+  {
+    id: "warp-drift",
+    noiseId: "domain-warp",
+    label: "Warp / drift",
+    params: {
+      scale: 3,
+      seed: 15,
+      octaves: 4,
+      gain: 0.48,
+      lacunarity: 2,
+      warpStrength: 1.2
+    }
+  },
+  {
+    id: "warp-marble",
+    noiseId: "domain-warp",
+    label: "Warp / marble",
+    params: {
+      scale: 4.5,
+      seed: 32,
+      octaves: 5,
+      gain: 0.5,
+      lacunarity: 2.1,
+      warpStrength: 3
+    }
+  },
+  {
+    id: "warp-turbulence",
+    noiseId: "domain-warp",
+    label: "Warp / turbulence",
+    params: {
+      scale: 6,
+      seed: 61,
+      octaves: 6,
+      gain: 0.46,
+      lacunarity: 2.2,
+      warpStrength: 5.2
+    }
   }
 ];
 

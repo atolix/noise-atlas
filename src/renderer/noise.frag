@@ -8,6 +8,7 @@ uniform int uOctaves;
 uniform float uGain;
 uniform float uLacunarity;
 uniform float uJitter;
+uniform float uWarpStrength;
 
 in vec2 vUv;
 out vec4 outColor;
@@ -110,6 +111,15 @@ float ridgedFbm(vec2 p) {
   return sum / max(normalization, 0.0001);
 }
 
+float domainWarp(vec2 p) {
+  vec2 offset = vec2(
+    fbm(p + vec2(0.0, 0.0)),
+    fbm(p + vec2(5.2, 1.3))
+  ) - 0.5;
+
+  return fbm(p + offset * uWarpStrength);
+}
+
 vec3 ramp(float n) {
   vec3 ink = vec3(0.055, 0.071, 0.102);
   vec3 blue = vec3(0.129, 0.353, 0.490);
@@ -137,6 +147,8 @@ void main() {
     n = worleyNoise(p);
   } else if (uNoiseKind == 4) {
     n = ridgedFbm(p);
+  } else if (uNoiseKind == 5) {
+    n = domainWarp(p);
   } else {
     n = valueNoise(p);
   }

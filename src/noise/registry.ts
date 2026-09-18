@@ -103,6 +103,26 @@ export const noiseDefinitions: NoiseDefinition[] = [
     description: "Inverted fractal noise that emphasizes mountain ridges and sharp veins.",
     shaderKind: 4,
     parameters: [...commonParameters, ...fractalParameters]
+  },
+  {
+    id: "domain-warp",
+    name: "Domain warp",
+    description: "Fractal noise sampled through a distorted domain for fluid and marbled forms.",
+    shaderKind: 5,
+    parameters: [
+      ...commonParameters,
+      ...fractalParameters,
+      {
+        type: "float",
+        name: "warpStrength",
+        shaderUniform: "uWarpStrength",
+        label: "Warp strength",
+        min: 0,
+        max: 6,
+        step: 0.05,
+        defaultValue: 2.5
+      }
+    ]
   }
 ];
 
