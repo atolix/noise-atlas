@@ -93,7 +93,7 @@ export class WebGlNoiseRenderer {
 
       const value = cell.params[parameter.name] ?? parameter.defaultValue;
 
-      if (parameter.type === "int") {
+      if (parameter.uniformType === "int") {
         gl.uniform1i(location, Math.round(value));
       } else {
         gl.uniform1f(location, value);

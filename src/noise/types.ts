@@ -3,6 +3,7 @@ export type NoiseParameter =
       type: "float";
       name: string;
       shaderUniform: string;
+      uniformType: "float" | "int";
       label: string;
       min: number;
       max: number;
@@ -13,6 +14,7 @@ export type NoiseParameter =
       type: "int";
       name: string;
       shaderUniform: string;
+      uniformType: "float" | "int";
       label: string;
       min: number;
       max: number;
