@@ -14,7 +14,7 @@ npm ci
 npm run dev
 ```
 
-Open the local URL printed by Vite. Use the noise selector or click an atlas cell to choose a preset. When an atlas cell has keyboard focus, the arrow keys move the selection. The sliders update the selected preset immediately.
+Open the local URL printed by Vite and click an atlas cell to choose a preset. When an atlas cell has keyboard focus, the arrow keys move the selection. The sliders update the selected preset immediately.
 
 ## Commands
 

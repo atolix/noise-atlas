@@ -1,5 +1,5 @@
 import { atlasCells, describeCell } from "./noise/presets";
-import { getDefaultParameterValues, getNoiseDefinition, noiseDefinitions } from "./noise/registry";
+import { getNoiseDefinition } from "./noise/registry";
 import type { AtlasCell, NoiseParameter } from "./noise/types";
 import { WebGlNoiseRenderer } from "./renderer/webgl";
 
@@ -13,7 +13,6 @@ const root = app;
 injectStyles();
 
 let selectedIndex = 0;
-let activeNoiseId = atlasCells[0]?.noiseId ?? noiseDefinitions[0]?.id ?? "value";
 let atlasRenderer: WebGlNoiseRenderer | null = null;
 let previewRenderer: WebGlNoiseRenderer | null = null;
 let renderFrame: number | null = null;
@@ -23,14 +22,7 @@ const maxPixelRatio = 2;
 root.innerHTML = `
   <main class="app-shell">
     <aside class="panel left-panel" aria-label="Noise controls">
-      <div>
-        <p class="eyebrow">Noise Atlas</p>
-        <h1>Procedural previews</h1>
-      </div>
-      <div class="control-group">
-        <label class="field-label" for="noise-source">Noise source</label>
-        <select id="noise-source" class="select-control"></select>
-      </div>
+      <p class="eyebrow">Noise Atlas</p>
       <div class="control-group compact">
         <h2 data-noise-name></h2>
         <p data-noise-description></p>
@@ -73,7 +65,6 @@ const previewCanvas = query<HTMLCanvasElement>(".preview-canvas");
 const grid = query<HTMLDivElement>(".atlas-grid");
 const selectedName = query<HTMLHeadingElement>("[data-selected-name]");
 const metadata = query<HTMLDListElement>(".metadata");
-const noiseSelect = query<HTMLSelectElement>("#noise-source");
 const noiseName = query<HTMLHeadingElement>("[data-noise-name]");
 const noiseDescription = query<HTMLParagraphElement>("[data-noise-description]");
 const parameterForm = query<HTMLFormElement>(".parameter-form");
@@ -81,7 +72,6 @@ const parameterForm = query<HTMLFormElement>(".parameter-form");
 try {
   atlasRenderer = new WebGlNoiseRenderer(atlasCanvas);
   previewRenderer = new WebGlNoiseRenderer(previewCanvas);
-  renderNoiseSelect();
   renderGridButtons();
   renderSelection();
   queueRender();
@@ -116,14 +106,6 @@ grid.addEventListener("keydown", (event) => {
   }
 });
 
-noiseSelect.addEventListener("change", () => {
-  activeNoiseId = noiseSelect.value;
-  const existingIndex = atlasCells.findIndex((cell) => cell.noiseId === activeNoiseId);
-  selectedIndex = existingIndex === -1 ? createCellFromActiveNoise() : existingIndex;
-  renderSelection();
-  queueRender();
-});
-
 function renderGridButtons(): void {
   grid.innerHTML = "";
 
@@ -148,22 +130,9 @@ function renderGridButtons(): void {
   }
 }
 
-function renderNoiseSelect(): void {
-  noiseSelect.innerHTML = "";
-
-  for (const definition of noiseDefinitions) {
-    const option = document.createElement("option");
-    option.value = definition.id;
-    option.textContent = definition.name;
-    noiseSelect.append(option);
-  }
-}
-
 function renderSelection(): void {
   const selected = getSelectedCell();
   const definition = getNoiseDefinition(selected.noiseId);
-  activeNoiseId = selected.noiseId;
-  noiseSelect.value = activeNoiseId;
   noiseName.textContent = definition.name;
   noiseDescription.textContent = definition.description;
   selectedName.textContent = selected.label;
@@ -287,19 +256,6 @@ function moveSelection(delta: number): void {
   getCellButtons()[selectedIndex]?.focus();
 }
 
-function createCellFromActiveNoise(): number {
-  const definition = getNoiseDefinition(activeNoiseId);
-  const nextIndex = atlasCells.length + 1;
-  atlasCells.push({
-    id: `${definition.id}-custom-${nextIndex}`,
-    noiseId: definition.id,
-    label: `${definition.name} / custom`,
-    params: getDefaultParameterValues(definition)
-  });
-  renderGridButtons();
-  return atlasCells.length - 1;
-}
-
 function getSelectedCell(): AtlasCell {
   return atlasCells[selectedIndex];
 }
@@ -371,7 +327,6 @@ body {
 }
 
 button,
-select,
 input {
   font: inherit;
 }
@@ -474,18 +429,6 @@ dd {
   text-transform: uppercase;
 }
 
-.select-control {
-  width: 100%;
-  min-height: 40px;
-  margin-top: 8px;
-  border: 1px solid rgba(255, 255, 255, 0.16);
-  border-radius: 6px;
-  background: #101318;
-  color: #e9edf0;
-  padding: 0 12px;
-}
-
-.select-control:focus-visible,
 .parameter-control input:focus-visible {
   outline: 3px solid #e8c96d;
   outline-offset: 3px;
