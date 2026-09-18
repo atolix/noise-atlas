@@ -223,6 +223,28 @@ float turbulence(vec2 p) {
   return clamp(sum / max(normalization, 0.0001) * 1.8, 0.0, 1.0);
 }
 
+float hybridMultifractal(vec2 p) {
+  float result = valueNoise(p);
+  float weight = result;
+  float amplitude = uGain;
+  float normalization = 1.0;
+
+  for (int i = 1; i < 8; i++) {
+    if (i >= uOctaves) {
+      break;
+    }
+
+    p *= uLacunarity;
+    float signal = valueNoise(p);
+    result += amplitude * signal * clamp(weight, 0.0, 1.0);
+    normalization += amplitude;
+    weight *= signal * 1.8;
+    amplitude *= uGain;
+  }
+
+  return clamp(result / max(normalization * 0.75, 0.0001), 0.0, 1.0);
+}
+
 float gaborNoise(vec2 p) {
   vec2 cell = floor(p);
   vec2 local = fract(p);
@@ -302,6 +324,8 @@ void main() {
     n = gaborNoise(p);
   } else if (uNoiseKind == 11) {
     n = cellularId(p);
+  } else if (uNoiseKind == 12) {
+    n = hybridMultifractal(p);
   } else {
     n = valueNoise(p);
   }

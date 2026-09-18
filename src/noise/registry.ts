@@ -208,6 +208,13 @@ export const noiseDefinitions: NoiseDefinition[] = [
     description: "A stable random value for each nearest Voronoi region.",
     shaderKind: 11,
     parameters: [...commonParameters, ...cellularParameters]
+  },
+  {
+    id: "hybrid-multifractal",
+    name: "Hybrid multifractal",
+    description: "Fractal detail weighted by larger forms for terrain-like massifs.",
+    shaderKind: 12,
+    parameters: [...commonParameters, ...fractalParameters]
   }
 ];
 

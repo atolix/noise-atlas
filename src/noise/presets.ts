@@ -390,6 +390,42 @@ export const atlasCells: AtlasCell[] = [
       seed: 87,
       jitter: 1
     }
+  },
+  {
+    id: "hybrid-massif",
+    noiseId: "hybrid-multifractal",
+    label: "Hybrid / massif",
+    params: {
+      scale: 2.5,
+      seed: 23,
+      octaves: 5,
+      gain: 0.48,
+      lacunarity: 2
+    }
+  },
+  {
+    id: "hybrid-highlands",
+    noiseId: "hybrid-multifractal",
+    label: "Hybrid / highlands",
+    params: {
+      scale: 5,
+      seed: 51,
+      octaves: 6,
+      gain: 0.54,
+      lacunarity: 2.15
+    }
+  },
+  {
+    id: "hybrid-rugged",
+    noiseId: "hybrid-multifractal",
+    label: "Hybrid / rugged",
+    params: {
+      scale: 8,
+      seed: 91,
+      octaves: 8,
+      gain: 0.58,
+      lacunarity: 2.3
+    }
   }
 ];
 
