@@ -90,6 +90,26 @@ float fbm(vec2 p) {
   return sum / max(normalization, 0.0001);
 }
 
+float ridgedFbm(vec2 p) {
+  float sum = 0.0;
+  float amplitude = 0.5;
+  float normalization = 0.0;
+
+  for (int i = 0; i < 8; i++) {
+    if (i >= uOctaves) {
+      break;
+    }
+
+    float ridge = 1.0 - abs(valueNoise(p) * 2.0 - 1.0);
+    sum += amplitude * ridge * ridge;
+    normalization += amplitude;
+    p *= uLacunarity;
+    amplitude *= uGain;
+  }
+
+  return sum / max(normalization, 0.0001);
+}
+
 vec3 ramp(float n) {
   vec3 ink = vec3(0.055, 0.071, 0.102);
   vec3 blue = vec3(0.129, 0.353, 0.490);
@@ -115,6 +135,8 @@ void main() {
     n = gradientNoise(p);
   } else if (uNoiseKind == 3) {
     n = worleyNoise(p);
+  } else if (uNoiseKind == 4) {
+    n = ridgedFbm(p);
   } else {
     n = valueNoise(p);
   }

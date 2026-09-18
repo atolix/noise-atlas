@@ -23,6 +23,39 @@ const commonParameters = [
   }
 ] as const;
 
+const fractalParameters = [
+  {
+    type: "int",
+    name: "octaves",
+    shaderUniform: "uOctaves",
+    label: "Octaves",
+    min: 1,
+    max: 8,
+    step: 1,
+    defaultValue: 5
+  },
+  {
+    type: "float",
+    name: "gain",
+    shaderUniform: "uGain",
+    label: "Gain",
+    min: 0.1,
+    max: 0.9,
+    step: 0.01,
+    defaultValue: 0.5
+  },
+  {
+    type: "float",
+    name: "lacunarity",
+    shaderUniform: "uLacunarity",
+    label: "Lacunarity",
+    min: 1.2,
+    max: 3.5,
+    step: 0.05,
+    defaultValue: 2
+  }
+] as const;
+
 export const noiseDefinitions: NoiseDefinition[] = [
   {
     id: "value",
@@ -36,39 +69,7 @@ export const noiseDefinitions: NoiseDefinition[] = [
     name: "Fractal Brownian motion",
     description: "Layered value noise with octave, gain, and lacunarity controls.",
     shaderKind: 1,
-    parameters: [
-      ...commonParameters,
-      {
-        type: "int",
-        name: "octaves",
-        shaderUniform: "uOctaves",
-        label: "Octaves",
-        min: 1,
-        max: 8,
-        step: 1,
-        defaultValue: 5
-      },
-      {
-        type: "float",
-        name: "gain",
-        shaderUniform: "uGain",
-        label: "Gain",
-        min: 0.1,
-        max: 0.9,
-        step: 0.01,
-        defaultValue: 0.5
-      },
-      {
-        type: "float",
-        name: "lacunarity",
-        shaderUniform: "uLacunarity",
-        label: "Lacunarity",
-        min: 1.2,
-        max: 3.5,
-        step: 0.05,
-        defaultValue: 2
-      }
-    ]
+    parameters: [...commonParameters, ...fractalParameters]
   },
   {
     id: "gradient",
@@ -95,6 +96,13 @@ export const noiseDefinitions: NoiseDefinition[] = [
         defaultValue: 1
       }
     ]
+  },
+  {
+    id: "ridged",
+    name: "Ridged fBm",
+    description: "Inverted fractal noise that emphasizes mountain ridges and sharp veins.",
+    shaderKind: 4,
+    parameters: [...commonParameters, ...fractalParameters]
   }
 ];
 

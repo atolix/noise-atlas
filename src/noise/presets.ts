@@ -120,12 +120,48 @@ export const atlasCells: AtlasCell[] = [
       seed: 44,
       jitter: 1
     }
+  },
+  {
+    id: "ridged-peaks",
+    noiseId: "ridged",
+    label: "Ridged / peaks",
+    params: {
+      scale: 3,
+      seed: 10,
+      octaves: 4,
+      gain: 0.5,
+      lacunarity: 2
+    }
+  },
+  {
+    id: "ridged-ranges",
+    noiseId: "ridged",
+    label: "Ridged / ranges",
+    params: {
+      scale: 5,
+      seed: 29,
+      octaves: 6,
+      gain: 0.52,
+      lacunarity: 2.1
+    }
+  },
+  {
+    id: "ridged-veins",
+    noiseId: "ridged",
+    label: "Ridged / veins",
+    params: {
+      scale: 9,
+      seed: 53,
+      octaves: 7,
+      gain: 0.44,
+      lacunarity: 2.3
+    }
   }
 ];
 
 export function describeCell(cell: AtlasCell): string {
   const base = `scale ${formatValue(cell.params.scale)} · seed ${formatValue(cell.params.seed)}`;
-  return cell.noiseId === "fbm"
+  return cell.params.octaves !== undefined
     ? `${base} · ${formatValue(cell.params.octaves)} octaves`
     : base;
 }
