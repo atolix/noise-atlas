@@ -195,6 +195,36 @@ export const atlasCells: AtlasCell[] = [
       lacunarity: 2.2,
       warpStrength: 5.2
     }
+  },
+  {
+    id: "voronoi-tiles",
+    noiseId: "voronoi-edges",
+    label: "Voronoi / tiles",
+    params: {
+      scale: 5,
+      seed: 7,
+      jitter: 0.25
+    }
+  },
+  {
+    id: "voronoi-cells",
+    noiseId: "voronoi-edges",
+    label: "Voronoi / cells",
+    params: {
+      scale: 8,
+      seed: 26,
+      jitter: 0.7
+    }
+  },
+  {
+    id: "voronoi-shards",
+    noiseId: "voronoi-edges",
+    label: "Voronoi / shards",
+    params: {
+      scale: 13,
+      seed: 58,
+      jitter: 1
+    }
   }
 ];
 

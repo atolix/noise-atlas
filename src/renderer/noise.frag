@@ -51,10 +51,10 @@ float gradientNoise(vec2 p) {
   return clamp(0.5 + value * 0.70710678, 0.0, 1.0);
 }
 
-float worleyNoise(vec2 p) {
+vec2 worleyDistances(vec2 p) {
   vec2 cell = floor(p);
   vec2 local = fract(p);
-  float minDistance = 2.0;
+  vec2 distances = vec2(2.0);
 
   for (int y = -1; y <= 1; y++) {
     for (int x = -1; x <= 1; x++) {
@@ -65,11 +65,27 @@ float worleyNoise(vec2 p) {
         hash(neighborCell + vec2(19.19, 73.73))
       );
       vec2 featurePoint = mix(vec2(0.5), randomPoint, uJitter);
-      minDistance = min(minDistance, length(neighbor + featurePoint - local));
+      float distanceToPoint = length(neighbor + featurePoint - local);
+
+      if (distanceToPoint < distances.x) {
+        distances.y = distances.x;
+        distances.x = distanceToPoint;
+      } else if (distanceToPoint < distances.y) {
+        distances.y = distanceToPoint;
+      }
     }
   }
 
-  return clamp(minDistance * 1.41421356, 0.0, 1.0);
+  return distances;
+}
+
+float worleyNoise(vec2 p) {
+  return clamp(worleyDistances(p).x * 1.41421356, 0.0, 1.0);
+}
+
+float voronoiEdges(vec2 p) {
+  vec2 distances = worleyDistances(p);
+  return 1.0 - smoothstep(0.02, 0.16, distances.y - distances.x);
 }
 
 float fbm(vec2 p) {
@@ -149,6 +165,8 @@ void main() {
     n = ridgedFbm(p);
   } else if (uNoiseKind == 5) {
     n = domainWarp(p);
+  } else if (uNoiseKind == 6) {
+    n = voronoiEdges(p);
   } else {
     n = valueNoise(p);
   }

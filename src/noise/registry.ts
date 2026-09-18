@@ -61,6 +61,20 @@ const fractalParameters = [
   }
 ] as const;
 
+const cellularParameters = [
+  {
+    type: "float",
+    name: "jitter",
+    shaderUniform: "uJitter",
+    uniformType: "float",
+    label: "Jitter",
+    min: 0,
+    max: 1,
+    step: 0.01,
+    defaultValue: 1
+  }
+] as const;
+
 export const noiseDefinitions: NoiseDefinition[] = [
   {
     id: "value",
@@ -88,20 +102,7 @@ export const noiseDefinitions: NoiseDefinition[] = [
     name: "Worley noise",
     description: "Cellular distance noise for stone, scales, and cracked surface patterns.",
     shaderKind: 3,
-    parameters: [
-      ...commonParameters,
-      {
-        type: "float",
-        name: "jitter",
-        shaderUniform: "uJitter",
-        uniformType: "float",
-        label: "Jitter",
-        min: 0,
-        max: 1,
-        step: 0.01,
-        defaultValue: 1
-      }
-    ]
+    parameters: [...commonParameters, ...cellularParameters]
   },
   {
     id: "ridged",
@@ -130,6 +131,13 @@ export const noiseDefinitions: NoiseDefinition[] = [
         defaultValue: 2.5
       }
     ]
+  },
+  {
+    id: "voronoi-edges",
+    name: "Voronoi edges",
+    description: "Cell boundaries derived from the two nearest Worley feature points.",
+    shaderKind: 6,
+    parameters: [...commonParameters, ...cellularParameters]
   }
 ];
 
